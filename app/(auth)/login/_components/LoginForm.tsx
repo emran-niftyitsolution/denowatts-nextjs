@@ -49,7 +49,7 @@ export default function LoginForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader className="text-center">
-        <CardTitle>Login</CardTitle>
+        <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>Please login in your account</CardDescription>
       </CardHeader>
       <CardContent>
