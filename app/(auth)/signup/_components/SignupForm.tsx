@@ -25,6 +25,12 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 const FormSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First name must be at least 2 characters.",
+  }),
+  lastName: z.string().min(2, {
+    message: "Last name must be at least 2 characters.",
+  }),
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -33,10 +39,12 @@ const FormSchema = z.object({
   }),
 });
 
-export default function LoginForm() {
+export default function SignupForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       username: "",
       password: "",
     },
@@ -49,12 +57,40 @@ export default function LoginForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Login</CardTitle>
-        <CardDescription>Please login in your account</CardDescription>
+        <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
+        <CardDescription>Create your account</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your first name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your last name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="username"
@@ -79,19 +115,19 @@ export default function LoginForm() {
                     <Input placeholder="Enter your password" {...field} />
                   </FormControl>
                   <FormDescription className="text-xs">
-                    Password must a strong password.
+                    Password must be a strong password.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="w-full">
-              Login
+              Sign Up
             </Button>
             <p className="text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
-              <Link href="/signup" className="text-primary">
-                Sign Up
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary">
+                Login
               </Link>
             </p>
           </form>
