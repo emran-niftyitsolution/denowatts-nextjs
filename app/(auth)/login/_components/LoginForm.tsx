@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -34,6 +35,7 @@ const FormSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -44,6 +46,7 @@ export default function LoginForm() {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+    router.push("/dashboard");
   }
 
   return (
